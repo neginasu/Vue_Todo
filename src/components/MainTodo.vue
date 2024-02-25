@@ -1,14 +1,17 @@
-<script setup></script>
+<script setup>
+  import { ref } from 'vue';
+  const todoRef = ref('');
+</script>
 
 <template>
-  <div class="box-input">
-    <input type="text" class="todo_input" placeholder="TODOを入力" />
+  <div class="box_input">
+    <input type="text" class="todo_input" v-model="todoRef" placeholder="TODOを入力" />
     <button class="btn">追加</button>
   </div>
 </template>
 
 <style scoped>
-.box-input {
+.box_input {
   display: flex;
   margin-top: 20px;
 }
