@@ -1,19 +1,26 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-const todoRef = ref('');
-const todoListRef = ref([]);
+
+type Todo = {
+  id: number;
+  task: string;
+};
+
+const todoTaskRef = ref('');
+const todoListRef = ref<Todo[]>([]);
+
 const addTodo = () => {
   const id = new Date().getTime();
-  todoListRef.value.push({ id: id, task: todoRef.value });
+  todoListRef.value.push({ id: id, task: todoTaskRef.value });
   localStorage.todoList = JSON.stringify(todoListRef.value);
-  todoRef.value = '';
+  todoTaskRef.value = '';
 };
 </script>
 
 <template>
   <div class="box_input">
     <input
-      v-model="todoRef"
+      v-model="todoTaskRef"
       type="text"
       class="todo_input"
       placeholder="TODOを入力"
