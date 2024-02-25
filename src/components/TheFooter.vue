@@ -1,8 +1,6 @@
 <template>
   <footer class="footer">
-  <small>
-    &copy;vue-todo
-  </small>
+    <small> &copy;vue-todo </small>
   </footer>
 </template>
 

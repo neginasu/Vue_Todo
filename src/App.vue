@@ -1,8 +1,7 @@
 <script setup lang="ts">
-  import TheHeader from './components/TheHeader.vue'
-  import TheFooter from './components/TheFooter.vue'
-  import MainTodo from './components/MainTodo.vue'
-  
+import MainTodo from './components/MainTodo.vue';
+import TheFooter from './components/TheFooter.vue';
+import TheHeader from './components/TheHeader.vue';
 </script>
 
 <template>
@@ -10,13 +9,13 @@
     <TheHeader />
     <main class="main"><MainTodo /></main>
     <TheFooter />
-  </div> 
+  </div>
 </template>
 
 <style scoped>
 @import 'assets/css/destyle.css';
 
-.wrap{
+.wrap {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,19 +1,45 @@
 <script setup>
-  import { ref } from 'vue';
-  const todoRef = ref('');
-  const todoListRef = ref([]);
-  const addTodo = () => {
+import { ref } from 'vue';
+const todoRef = ref('');
+const todoListRef = ref([]);
+const addTodo = () => {
   const id = new Date().getTime();
-  todoListRef.value.push({id: id, task: todoRef.value})
+  todoListRef.value.push({ id: id, task: todoRef.value });
   localStorage.todoList = JSON.stringify(todoListRef.value);
-  todoRef.value='';
-  };
+  todoRef.value = '';
+};
 </script>
 
 <template>
   <div class="box_input">
-    <input type="text" class="todo_input" v-model="todoRef" placeholder="TODOを入力" />
+    <input
+      v-model="todoRef"
+      type="text"
+      class="todo_input"
+      placeholder="TODOを入力"
+    />
     <button class="btn" @click="addTodo">追加</button>
+  </div>
+  <div class="box_list">
+    <div class="todo_list">
+      <div class="todo">
+        <input type="checkbox" class="check" /><label>TODO1</label>
+      </div>
+      <div class="btns">
+        <button class="btn green">編</button>
+        <button class="btn pink">削</button>
+      </div>
+    </div>
+
+    <div class="todo_list">
+      <div class="todo">
+        <input type="checkbox" class="check" /><label>TODO2</label>
+      </div>
+      <div class="btns">
+        <button class="btn green">編</button>
+        <button class="btn pink">削</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,6 +57,7 @@
   border: 1px solid #aaa;
   border-radius: 6px;
 }
+
 .btn {
   padding: 8px;
   background-color: #03a9f4;
@@ -38,5 +65,45 @@
   color: #fff;
   text-align: center;
   font-size: 14px;
+  border: none;
+}
+
+.box_list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo_list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todo {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  width: 300px;
+}
+
+.check {
+  border: 1px solid red;
+  transform: scale(1.6);
+  margin: 0 16px 2px 6px;
+}
+
+.btns {
+  display: flex;
+  gap: 4px;
+}
+
+.green {
+  background-color: #00c853;
+}
+
+.pink {
+  background-color: #ff4081;
 }
 </style>
