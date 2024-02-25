@@ -2,7 +2,7 @@
   import { ref } from 'vue';
   const todoRef = ref('');
   const addTodo = () => {
-  console.log(todoRef.value);
+  localStorage.todoList = todoRef.value;
   };
 </script>
 
