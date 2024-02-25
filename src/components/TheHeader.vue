@@ -2,7 +2,7 @@
   <h1 class='title'>TODO</h1 class='title'>
 </template>
 
-<style>
+<style scoped>
 .title {
   width: 100%;
   background-color: #e3f2fd;
