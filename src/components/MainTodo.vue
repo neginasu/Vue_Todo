@@ -32,7 +32,7 @@ const addTodo = () => {
     <button class="btn" @click="addTodo">追加</button>
   </div>
   <div class="box_list">
-    <div class="todo_list" v-for="todo in todoListRef" :key="todo.id">
+    <div v-for="todo in todoListRef" :key="todo.id" class="todo_list" >
       <div class="todo">
         <input type="checkbox" class="check" /><label>{{todo.task}}</label>
       </div>
