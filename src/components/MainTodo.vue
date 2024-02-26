@@ -7,7 +7,11 @@ type Todo = {
 };
 
 const todoTaskRef = ref('');
-const todoListRef = ref<Todo[]>([]);
+const todoListRef = ref<Todo[]>([
+{id: 1, task: "TODO1"},
+{id: 2, task: "TODO2"},
+{id: 3, task: "TODO3"},
+]);
 
 const addTodo = () => {
   const id = new Date().getTime();
@@ -28,26 +32,16 @@ const addTodo = () => {
     <button class="btn" @click="addTodo">追加</button>
   </div>
   <div class="box_list">
-    <div class="todo_list">
+    <div class="todo_list" v-for="todo in todoListRef" :key="todo.id">
       <div class="todo">
-        <input type="checkbox" class="check" /><label>TODO1</label>
+        <input type="checkbox" class="check" /><label>{{todo.task}}</label>
       </div>
       <div class="btns">
         <button class="btn green">編</button>
         <button class="btn pink">削</button>
       </div>
     </div>
-
-    <div class="todo_list">
-      <div class="todo">
-        <input type="checkbox" class="check" /><label>TODO2</label>
-      </div>
-      <div class="btns">
-        <button class="btn green">編</button>
-        <button class="btn pink">削</button>
-      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
