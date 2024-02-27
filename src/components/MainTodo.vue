@@ -8,8 +8,8 @@ type Todo = {
 
 const todoTaskRef = ref('');
 const todoListRef = ref<Todo[]>([]);
-const ls = localStorage.todoLIst;
-todoListRef.value = ls ? JSON.parse(ls) : [];
+const ls = localStorage.todoList;
+todoListRef.value = ls ? JSON.parse(ls): [];
 
 const addTodo = () => {
   const id = new Date().getTime();
@@ -17,6 +17,11 @@ const addTodo = () => {
   localStorage.todoList = JSON.stringify(todoListRef.value);
   todoTaskRef.value = '';
 };
+
+const showTodo = (id: number) => {
+const todo = todoListRef.value.find((todo) => todo.id === id);
+todoTaskRef.value = todo?.task ?? '';
+}
 </script>
 
 <template>
@@ -30,16 +35,16 @@ const addTodo = () => {
     <button class="btn" @click="addTodo">追加</button>
   </div>
   <div class="box_list">
-    <div v-for="todo in todoListRef" :key="todo.id" class="todo_list">
+    <div v-for="todo in todoListRef" :key="todo.id" class="todo_list" >
       <div class="todo">
-        <input type="checkbox" class="check" /><label>{{ todo.task }}</label>
+        <input type="checkbox" class="check" /><label>{{todo.task}}</label>
       </div>
       <div class="btns">
-        <button class="btn green">編</button>
+        <button class="btn green" @click="showTodo(todo.id)">編</button>
         <button class="btn pink">削</button>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <style scoped>
