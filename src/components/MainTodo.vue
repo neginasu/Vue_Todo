@@ -8,20 +8,45 @@ type Todo = {
 
 const todoTaskRef = ref('');
 const todoListRef = ref<Todo[]>([]);
+const currentEditIdRef = ref<number | null>(null);
+const isEditRef = ref(false);
 const ls = localStorage.todoList;
 todoListRef.value = ls ? JSON.parse(ls): [];
 
 const addTodo = () => {
-  const id = new Date().getTime();
-  todoListRef.value.push({ id: id, task: todoTaskRef.value });
+  if (isEditRef.value) {
+    const index = todoListRef.value.findIndex(todo => todo.id === currentEditIdRef.value);
+    if (index !== -1) {
+      todoListRef.value[index].task = todoTaskRef.value;
+    }
+    isEditRef.value = false;
+    currentEditIdRef.value = null;
+  } else {
+    const id = new Date().getTime();
+    todoListRef.value.push({ id: id, task: todoTaskRef.value });
+  }
   localStorage.todoList = JSON.stringify(todoListRef.value);
   todoTaskRef.value = '';
 };
 
 const showTodo = (id: number) => {
-const todo = todoListRef.value.find((todo) => todo.id === id);
-todoTaskRef.value = todo?.task ?? '';
-}
+  const todo = todoListRef.value.find((todo) => todo.id === id);
+  todoTaskRef.value = todo?.task ?? '';
+  currentEditIdRef.value = id;
+  isEditRef.value = true;
+};
+
+const deleteTodo = (id: number) => {
+  const idx = todoListRef.value.findIndex((todo) => todo.id === id);
+  if (idx !== -1) {
+    const todo = todoListRef.value[idx];
+    const delMsg = `「${todo.task}」を削除しますか？`;
+    if (!confirm(delMsg)) return;
+    todoListRef.value.splice(idx, 1);
+    localStorage.todoList = JSON.stringify(todoListRef.value);
+  }
+};
+
 </script>
 
 <template>
@@ -32,7 +57,7 @@ todoTaskRef.value = todo?.task ?? '';
       class="todo_input"
       placeholder="TODOを入力"
     />
-    <button class="btn" @click="addTodo">追加</button>
+    <button class="btn" @click="addTodo">{{ isEditRef ? '変更' : '追加' }}</button>
   </div>
   <div class="box_list">
     <div v-for="todo in todoListRef" :key="todo.id" class="todo_list" >
@@ -41,10 +66,10 @@ todoTaskRef.value = todo?.task ?? '';
       </div>
       <div class="btns">
         <button class="btn green" @click="showTodo(todo.id)">編</button>
-        <button class="btn pink">削</button>
+        <button class="btn pink" @click="deleteTodo(todo.id)">削</button>
       </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <style scoped>
